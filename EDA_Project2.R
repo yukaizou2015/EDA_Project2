@@ -19,3 +19,16 @@ library(ggplot2, lib.loc = "//R01SFCHSM03.r01.med.va.gov/homedir$/vhasfczouy/My 
 qplot(x = year, y = Emissions, geom = "bar", stat = "identity", data = NEI_Balt, facets = . ~ type, fill = type)
 dev.copy(png, file = "Question3.png")
 dev.off()
+
+# Question 4
+library(xlsx, lib.loc = "//R01SFCHSM03.r01.med.va.gov/homedir$/vhasfczouy/My Documents/Coursera/library/")
+library(proto, lib.loc = "//R01SFCHSM03.r01.med.va.gov/homedir$/vhasfczouy/My Documents/Coursera/library/")
+library(sqldf, lib.loc = "//R01SFCHSM03.r01.med.va.gov/homedir$/vhasfczouy/My Documents/Coursera/library/")
+
+SCC_Coal <- SCC[SCC$EI.Sector == "Fuel Comb - Comm/Institutional - Coal", ] # Subset the coal out
+SCC_Coal2 <- subset(SCC, select = c(SCC, EI.Sector))
+        # Query from NEI_Balt left join SCC_Coal on SCC is equal
+        join_string <- "select NEI_Balt.SCC, NEI_Balt.Emissions, NEI_Balt.year, SCC_Coal.SCC,
+                        SCC_Coal.[EI.Sector] from NEI_Balt left join SCC_Coal on
+                        NEI_Balt.SCC = SCC_Coal.SCC"
+        Query4 <- sqldf(join_string, stringsAsFactors = FALSE)
