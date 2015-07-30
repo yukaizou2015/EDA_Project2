@@ -13,3 +13,9 @@ te2 <- with(NEI_Balt, tapply(Emissions, year, sum)) # Total emissions per year i
 barplot(te2)
 dev.copy(png, file = "Question2.png")
 dev.off()
+
+# Question 3
+library(ggplot2, lib.loc = "//R01SFCHSM03.r01.med.va.gov/homedir$/vhasfczouy/My Documents/Coursera/library/")
+qplot(x = year, y = Emissions, geom = "bar", stat = "identity", data = NEI_Balt, facets = . ~ type, fill = type)
+dev.copy(png, file = "Question3.png")
+dev.off()
