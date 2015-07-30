@@ -26,9 +26,11 @@ library(proto, lib.loc = "//R01SFCHSM03.r01.med.va.gov/homedir$/vhasfczouy/My Do
 library(sqldf, lib.loc = "//R01SFCHSM03.r01.med.va.gov/homedir$/vhasfczouy/My Documents/Coursera/library/")
 
 SCC_Coal <- SCC[SCC$EI.Sector == "Fuel Comb - Comm/Institutional - Coal", ] # Subset the coal out
-SCC_Coal2 <- subset(SCC, select = c(SCC, EI.Sector))
-        # Query from NEI_Balt left join SCC_Coal on SCC is equal
-        join_string <- "select NEI_Balt.SCC, NEI_Balt.Emissions, NEI_Balt.year, SCC_Coal.SCC,
-                        SCC_Coal.[EI.Sector] from NEI_Balt left join SCC_Coal on
-                        NEI_Balt.SCC = SCC_Coal.SCC"
+        # Query from NEI inner join SCC_Coal on SCC is equal
+        join_string <- "select NEI.SCC, NEI.Emissions, NEI.year, SCC_Coal.SCC,
+                        SCC_Coal.[EI.Sector], SCC_Coal.[SCC.Level.Three] from NEI inner join SCC_Coal on
+                        NEI.SCC = SCC_Coal.SCC" # Now I understand how inner join works
         Query4 <- sqldf(join_string, stringsAsFactors = FALSE)
+        qplot(x = year, y = Emissions, geom = "bar", stat = "identity", data = Query4, fill = SCC.Level.Three)
+        g <- ggplot(data = Query4, aes(x = year, y = Emissions))
+        g + geom_bar(stat = "identity", aes(color = Scc.Level.Three))
