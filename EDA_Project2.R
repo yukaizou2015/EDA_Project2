@@ -60,6 +60,7 @@ dev.copy(png, file = "Question5.png")
 dev.off()
 
 # Question 6
+# Useful reference: http://www.cookbook-r.com/Graphs/Legends_%28ggplot2%29/
 NEI_BL <- NEI[NEI$fips == "24510" | NEI$fips == "06037",] # Subset Baltimore and LA out
 SCC_MC <- SCC[SCC$SCC.Level.Three == "Motorcycles (MC)", ]
         # Query from NEI inner join SCC_Coal on SCC is equal
