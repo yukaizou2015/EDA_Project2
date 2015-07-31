@@ -14,8 +14,8 @@ dev.off()
 # Question 2
 NEI_Balt <- NEI[NEI$fips == "24510",] # Subset Baltimore out
 te2 <- with(NEI_Balt, tapply(Emissions, year, sum)) # Total emissions per year in Baltimore
-barplot(te2)
-dev.copy(png, file = "Question2.png")
+barplot(te2, col = "darkgreen", main = "Total PM2.5 Emissions in Baltimore City", xlab = "Year", ylab = "Total Emissions", font.lab = 2)
+dev.copy(png, file = "plot2.png")
 dev.off()
 
 # Question 3
