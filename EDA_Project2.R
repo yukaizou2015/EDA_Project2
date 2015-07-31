@@ -5,8 +5,10 @@ SCC <- readRDS("Source_Classification_Code.rds")
 
 # Question 1
 te <- with(NEI, tapply(Emissions, year, sum)) # Total emissions per year
-barplot(te)
-dev.copy(png, file = "Question1.png")
+barplot(te, main = "Total PM2.5 Emissions from All Sources", yaxt = "n",
+        col = "darkblue", xlab = "Year", ylab = "Total Emissions (in million)", font.lab = 2)
+axis(2, at = seq(0, 7e6, by = 1e6), labels = seq(0, 7, step = 1))
+dev.copy(png, file = "plot1.png")
 dev.off()
 
 # Question 2
