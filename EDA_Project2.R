@@ -1,3 +1,5 @@
+setwd("C:/Users/vhasfczouy/Desktop/Coursera/exdata_data_NEI_data")
+
 NEI <- readRDS("summarySCC_PM25.rds")
 SCC <- readRDS("Source_Classification_Code.rds")
 
@@ -24,6 +26,7 @@ dev.off()
 library(xlsx, lib.loc = "//R01SFCHSM03.r01.med.va.gov/homedir$/vhasfczouy/My Documents/Coursera/library/")
 library(proto, lib.loc = "//R01SFCHSM03.r01.med.va.gov/homedir$/vhasfczouy/My Documents/Coursera/library/")
 library(sqldf, lib.loc = "//R01SFCHSM03.r01.med.va.gov/homedir$/vhasfczouy/My Documents/Coursera/library/")
+library(ggplot2, lib.loc = "//R01SFCHSM03.r01.med.va.gov/homedir$/vhasfczouy/My Documents/Coursera/library/")
 
 SCC_Coal <- SCC[SCC$EI.Sector == "Fuel Comb - Comm/Institutional - Coal", ] # Subset the coal out
         # Query from NEI inner join SCC_Coal on SCC is equal
@@ -32,5 +35,8 @@ SCC_Coal <- SCC[SCC$EI.Sector == "Fuel Comb - Comm/Institutional - Coal", ] # Su
                         NEI.SCC = SCC_Coal.SCC" # Now I understand how inner join works
         Query4 <- sqldf(join_string, stringsAsFactors = FALSE)
         qplot(x = year, y = Emissions, geom = "bar", stat = "identity", data = Query4, fill = SCC.Level.Three)
-        g <- ggplot(data = Query4, aes(x = year, y = Emissions))
-        g + geom_bar(stat = "identity", aes(color = Scc.Level.Three))
+        g <- ggplot(data = Query4, aes(x = year, y = Emissions)) + geom_bar(aes(fill = SCC.Level.Three), stat = "identity") + facet_wrap( ~ SCC.Level.Three)
+        g
+dev.copy(png, file = "Question4.png")
+dev.off()
+        
